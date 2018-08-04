@@ -78,7 +78,7 @@
 <link href="/blog/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="后端,RESTful," />
 
 
 
@@ -94,18 +94,19 @@
 
 
 
-<meta name="description" content="前言：REST是一种风格参考，不是硬性要求。 Roy Fielding的毕业论文。这哥们参与设计HTTP协议，也是Apache Web的co-founde；所以提出的设计思想是有保障的。 论文地址：https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm我认为目前RESTful风格所解决的问题是:    clie">
+<meta name="description" content="前言：REST是一种风格参考，不是硬性要求。Roy Fielding的毕业论文。这哥们参与设计HTTP协议，也是Apache Web的co-founde；所以提出的设计思想是有保障的。 论文地址：https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm 一：所解决的问题：我认为目前RESTful风格所解决的问题是">
+<meta name="keywords" content="后端,RESTful">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RESTful笔记及规范">
 <meta property="og:url" content="http://yoursite.com/blog/2018/08/04/RESTful笔记及规范/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="前言：REST是一种风格参考，不是硬性要求。 Roy Fielding的毕业论文。这哥们参与设计HTTP协议，也是Apache Web的co-founde；所以提出的设计思想是有保障的。 论文地址：https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm我认为目前RESTful风格所解决的问题是:    clie">
+<meta property="og:description" content="前言：REST是一种风格参考，不是硬性要求。Roy Fielding的毕业论文。这哥们参与设计HTTP协议，也是Apache Web的co-founde；所以提出的设计思想是有保障的。 论文地址：https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm 一：所解决的问题：我认为目前RESTful风格所解决的问题是">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/25/164d025a2e74706e?w=435&h=153&f=gif&s=2663">
-<meta property="og:updated_time" content="2018-08-04T08:15:23.287Z">
+<meta property="og:updated_time" content="2018-08-04T09:12:55.118Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RESTful笔记及规范">
-<meta name="twitter:description" content="前言：REST是一种风格参考，不是硬性要求。 Roy Fielding的毕业论文。这哥们参与设计HTTP协议，也是Apache Web的co-founde；所以提出的设计思想是有保障的。 论文地址：https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm我认为目前RESTful风格所解决的问题是:    clie">
+<meta name="twitter:description" content="前言：REST是一种风格参考，不是硬性要求。Roy Fielding的毕业论文。这哥们参与设计HTTP协议，也是Apache Web的co-founde；所以提出的设计思想是有保障的。 论文地址：https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm 一：所解决的问题：我认为目前RESTful风格所解决的问题是">
 <meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/7/25/164d025a2e74706e?w=435&h=153&f=gif&s=2663">
 
 
@@ -208,6 +209,16 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
           </a>
         </li>
       
@@ -331,9 +342,9 @@
       
 
       
-        <p>前言：REST是一种风格参考，不是硬性要求。</p>
-<p>Roy Fielding的毕业论文。这哥们参与设计HTTP协议，也是Apache Web的co-founde；所以提出的设计思想是有保障的。</p>
-<h4 id="论文地址：https-www-ics-uci-edu-fielding-pubs-dissertation-rest-arch-style-htm"><a href="#论文地址：https-www-ics-uci-edu-fielding-pubs-dissertation-rest-arch-style-htm" class="headerlink" title="论文地址：https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm"></a>论文地址：<a href="https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm" target="_blank" rel="noopener">https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm</a></h4><p>我认为目前RESTful风格所解决的问题是:  </p>
+        <h3 id="前言：REST是一种风格参考，不是硬性要求。"><a href="#前言：REST是一种风格参考，不是硬性要求。" class="headerlink" title="前言：REST是一种风格参考，不是硬性要求。"></a>前言：REST是一种风格参考，不是硬性要求。</h3><p>Roy Fielding的毕业论文。这哥们参与设计HTTP协议，也是Apache Web的co-founde；所以提出的设计思想是有保障的。</p>
+<p>论文地址：<a href="https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm" target="_blank" rel="noopener">https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm</a></p>
+<h3 id="一：所解决的问题："><a href="#一：所解决的问题：" class="headerlink" title="一：所解决的问题："></a>一：所解决的问题：</h3><p>我认为目前RESTful风格所解决的问题是:  </p>
 <p><img src="https://user-gold-cdn.xitu.io/2018/7/25/164d025a2e74706e?w=435&amp;h=153&amp;f=gif&amp;s=2663" alt="cmd-markdown-logo"></p>
 <p>clients:</p>
 <ul>
@@ -342,21 +353,24 @@
 <li>web</li>
 <li>Other</li>
 </ul>
-<p>建立在RESTful还未形成的时候或许不同的设备需要提供不同的API，所以RESTful可以标准化整个API，并且需要为多个client提供结果，那变相的也必须要保证API的健壮性和可靠性</p>
+<p>RESTful还未形成的时候或许不同的设备需要提供不同的API，那在RESTful出现之后可以标准化整个API，在标准化的过程中肯定需要适配多个client，不同的client需要的数据结构或者数据不同但是大同小异，所以在实现API的过程中提高健壮性、可靠性、通用性、完整性是必然</p>
 <hr>
-<h4 id="RESTful是一种风格；通过与传统RPC或Struts的实际效果来总结RESTful的特点："><a href="#RESTful是一种风格；通过与传统RPC或Struts的实际效果来总结RESTful的特点：" class="headerlink" title="RESTful是一种风格；通过与传统RPC或Struts的实际效果来总结RESTful的特点："></a>RESTful是一种风格；通过与传统RPC或Struts的实际效果来总结RESTful的特点：</h4><blockquote>
+<h3 id="二：传统RPC或Struts的实际效果来总结RESTful的特点："><a href="#二：传统RPC或Struts的实际效果来总结RESTful的特点：" class="headerlink" title="二：传统RPC或Struts的实际效果来总结RESTful的特点："></a>二：传统RPC或Struts的实际效果来总结RESTful的特点：</h3><blockquote>
 <ul>
-<li>基础操作符  GET POST DEL PUT</li>
-<li>HTTP中的Headers的利用率</li>
-<li>URI的命名</li>
-<li>解除JSP方式，前后分离</li>
-<li>分离后的交互数据结构</li>
-<li>URI是名词不是动词，推荐复数</li>
-<li>安全的URI</li>
+<li>1.基础操作符  GET POST DEL PUT</li>
+<li>2.HTTP中的Headers的利用率</li>
+<li>3.URI的命名</li>
+<li>4.解除JSP方式，前后分离</li>
+<li>5.分离后的交互数据结构</li>
+<li>6.URI是名词不是动词，推荐复数</li>
+<li>7.安全的URI</li>
 </ul>
 </blockquote>
 <p>以上几点就能看出，满足这几个特点基本可以对HTTP的请求形成一套标准化</p>
-<h3 id="1-暂定admin为标准restful-包含增删改查"><a href="#1-暂定admin为标准restful-包含增删改查" class="headerlink" title="1. 暂定admin为标准restful   包含增删改查"></a>1. 暂定admin为标准restful   包含增删改查</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET /api/admin/v1/employee          //获取集合，自动分页</span><br><span class="line">GET  /api/admin/v1/employee/&#123;id&#125;    //一个对象</span><br><span class="line">DELETE /api/admin/v1/employee/&#123;id&#125;  //删除</span><br><span class="line">POST /api/admin/v1/employee         //保存</span><br><span class="line">PUT /api/admin/v1/employee/&#123;id&#125;     //修改</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="三：实际定义"><a href="#三：实际定义" class="headerlink" title="三：实际定义"></a>三：实际定义</h3><h4 id="1-暂定admin为标准restful-包含增删改查"><a href="#1-暂定admin为标准restful-包含增删改查" class="headerlink" title="1. 暂定admin为标准restful   包含增删改查"></a>1. 暂定admin为标准restful   包含增删改查</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET /api/admin/v1/employees          //获取集合，自动分页</span><br><span class="line">GET  /api/admin/v1/employee/&#123;id&#125;    //一个对象</span><br><span class="line">DELETE /api/admin/v1/employee/&#123;id&#125;  //删除</span><br><span class="line">POST /api/admin/v1/employee         //保存</span><br><span class="line">PUT /api/admin/v1/employee/&#123;id&#125;     //修改</span><br></pre></td></tr></table></figure>
+<h4 id="2-未完待续"><a href="#2-未完待续" class="headerlink" title="2.未完待续"></a>2.未完待续</h4><h3 id="基于本篇推荐书籍"><a href="#基于本篇推荐书籍" class="headerlink" title="基于本篇推荐书籍"></a>基于本篇推荐书籍</h3><p>《Java RESTful Web Service 实战(第二版)》</p>
+
       
     </div>
     
@@ -370,6 +384,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/后端/" rel="tag"># 后端</a>
+          
+            <a href="/blog/tags/RESTful/" rel="tag"># RESTful</a>
+          
+        </div>
       
 
       
@@ -474,6 +496,15 @@
           
 
           
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
 
         </nav>
 
@@ -504,7 +535,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#论文地址：https-www-ics-uci-edu-fielding-pubs-dissertation-rest-arch-style-htm"><span class="nav-number">1.</span> <span class="nav-text">论文地址：https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RESTful是一种风格；通过与传统RPC或Struts的实际效果来总结RESTful的特点："><span class="nav-number">2.</span> <span class="nav-text">RESTful是一种风格；通过与传统RPC或Struts的实际效果来总结RESTful的特点：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-暂定admin为标准restful-包含增删改查"><span class="nav-number"></span> <span class="nav-text">1. 暂定admin为标准restful   包含增删改查</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言：REST是一种风格参考，不是硬性要求。"><span class="nav-number">1.</span> <span class="nav-text">前言：REST是一种风格参考，不是硬性要求。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一：所解决的问题："><span class="nav-number">2.</span> <span class="nav-text">一：所解决的问题：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二：传统RPC或Struts的实际效果来总结RESTful的特点："><span class="nav-number">3.</span> <span class="nav-text">二：传统RPC或Struts的实际效果来总结RESTful的特点：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三：实际定义"><span class="nav-number">4.</span> <span class="nav-text">三：实际定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-暂定admin为标准restful-包含增删改查"><span class="nav-number">4.1.</span> <span class="nav-text">1. 暂定admin为标准restful   包含增删改查</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-未完待续"><span class="nav-number">4.2.</span> <span class="nav-text">2.未完待续</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于本篇推荐书籍"><span class="nav-number">5.</span> <span class="nav-text">基于本篇推荐书籍</span></a></li></ol></div>
             
 
           </div>
