@@ -94,17 +94,19 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="前言：REST是一种风格参考，不是硬性要求。 Roy Fielding的毕业论文。这哥们参与设计HTTP协议，也是Apache Web的co-founde；所以提出的设计思想是有保障的。 论文地址：https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm我认为目前RESTful风格所解决的问题是:    clie">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/blog/2018/08/04/hello-world/index.html">
+<meta property="og:title" content="RESTful笔记及规范">
+<meta property="og:url" content="http://yoursite.com/blog/2018/08/04/RESTful笔记及规范/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="前言：REST是一种风格参考，不是硬性要求。 Roy Fielding的毕业论文。这哥们参与设计HTTP协议，也是Apache Web的co-founde；所以提出的设计思想是有保障的。 论文地址：https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm我认为目前RESTful风格所解决的问题是:    clie">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-04T06:54:41.280Z">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/25/164d025a2e74706e?w=435&h=153&f=gif&s=2663">
+<meta property="og:updated_time" content="2018-08-04T08:15:23.287Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="RESTful笔记及规范">
+<meta name="twitter:description" content="前言：REST是一种风格参考，不是硬性要求。 Roy Fielding的毕业论文。这哥们参与设计HTTP协议，也是Apache Web的co-founde；所以提出的设计思想是有保障的。 论文地址：https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm我认为目前RESTful风格所解决的问题是:    clie">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/7/25/164d025a2e74706e?w=435&h=153&f=gif&s=2663">
 
 
 
@@ -133,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/blog/2018/08/04/hello-world/"/>
+  <link rel="canonical" href="http://yoursite.com/blog/2018/08/04/RESTful笔记及规范/"/>
 
 
 
 
 
-  <title>Hello World | Hexo</title>
+  <title>RESTful笔记及规范 | Hexo</title>
   
 
 
@@ -262,7 +264,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/blog/2018/08/04/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/blog/2018/08/04/RESTful笔记及规范/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="李锡钰">
@@ -279,7 +281,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">RESTful笔记及规范</h1>
         
 
         <div class="post-meta">
@@ -291,7 +293,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-04T14:54:41+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-04T16:15:02+08:00">
                 2018-08-04
               </time>
             
@@ -329,16 +331,32 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+        <p>前言：REST是一种风格参考，不是硬性要求。</p>
+<p>Roy Fielding的毕业论文。这哥们参与设计HTTP协议，也是Apache Web的co-founde；所以提出的设计思想是有保障的。</p>
+<h4 id="论文地址：https-www-ics-uci-edu-fielding-pubs-dissertation-rest-arch-style-htm"><a href="#论文地址：https-www-ics-uci-edu-fielding-pubs-dissertation-rest-arch-style-htm" class="headerlink" title="论文地址：https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm"></a>论文地址：<a href="https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm" target="_blank" rel="noopener">https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm</a></h4><p>我认为目前RESTful风格所解决的问题是:  </p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/25/164d025a2e74706e?w=435&amp;h=153&amp;f=gif&amp;s=2663" alt="cmd-markdown-logo"></p>
+<p>clients:</p>
+<ul>
+<li>IOS</li>
+<li>Android</li>
+<li>web</li>
+<li>Other</li>
+</ul>
+<p>建立在RESTful还未形成的时候或许不同的设备需要提供不同的API，所以RESTful可以标准化整个API，并且需要为多个client提供结果，那变相的也必须要保证API的健壮性和可靠性</p>
+<hr>
+<h4 id="RESTful是一种风格；通过与传统RPC或Struts的实际效果来总结RESTful的特点："><a href="#RESTful是一种风格；通过与传统RPC或Struts的实际效果来总结RESTful的特点：" class="headerlink" title="RESTful是一种风格；通过与传统RPC或Struts的实际效果来总结RESTful的特点："></a>RESTful是一种风格；通过与传统RPC或Struts的实际效果来总结RESTful的特点：</h4><blockquote>
+<ul>
+<li>基础操作符  GET POST DEL PUT</li>
+<li>HTTP中的Headers的利用率</li>
+<li>URI的命名</li>
+<li>解除JSP方式，前后分离</li>
+<li>分离后的交互数据结构</li>
+<li>URI是名词不是动词，推荐复数</li>
+<li>安全的URI</li>
+</ul>
+</blockquote>
+<p>以上几点就能看出，满足这几个特点基本可以对HTTP的请求形成一套标准化</p>
+<h3 id="1-暂定admin为标准restful-包含增删改查"><a href="#1-暂定admin为标准restful-包含增删改查" class="headerlink" title="1. 暂定admin为标准restful   包含增删改查"></a>1. 暂定admin为标准restful   包含增删改查</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET /api/admin/v1/employee          //获取集合，自动分页</span><br><span class="line">GET  /api/admin/v1/employee/&#123;id&#125;    //一个对象</span><br><span class="line">DELETE /api/admin/v1/employee/&#123;id&#125;  //删除</span><br><span class="line">POST /api/admin/v1/employee         //保存</span><br><span class="line">PUT /api/admin/v1/employee/&#123;id&#125;     //修改</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -362,15 +380,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/blog/2018/08/04/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/2018/08/04/RESTful笔记及规范/" rel="prev" title="RESTful笔记及规范">
-                RESTful笔记及规范 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -486,7 +504,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#论文地址：https-www-ics-uci-edu-fielding-pubs-dissertation-rest-arch-style-htm"><span class="nav-number">1.</span> <span class="nav-text">论文地址：https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RESTful是一种风格；通过与传统RPC或Struts的实际效果来总结RESTful的特点："><span class="nav-number">2.</span> <span class="nav-text">RESTful是一种风格；通过与传统RPC或Struts的实际效果来总结RESTful的特点：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-暂定admin为标准restful-包含增删改查"><span class="nav-number"></span> <span class="nav-text">1. 暂定admin为标准restful   包含增删改查</span></a></div>
             
 
           </div>
