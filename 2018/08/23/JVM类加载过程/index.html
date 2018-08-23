@@ -104,7 +104,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://pd2nmxi57.bkt.clouddn.com/class_load_20180823223916.png">
 <meta property="og:image" content="http://pd2nmxi57.bkt.clouddn.com/class_file_20180823224116.png">
-<meta property="og:updated_time" content="2018-08-23T15:37:00.038Z">
+<meta property="og:updated_time" content="2018-08-23T15:38:19.727Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM类加载过程">
 <meta name="twitter:description" content="过程  加载 根据全限定名获取类的二进制字节流，从jar,war,ear等格式文件读取 字节流转为方法去的运行时数据结构 生成class对象，用此对象打开方法区的入口   验证 现在所有的class文件（这里指的是引用，还没有到实际的对象创建）都已经转为数据结构，存放在方法区 如果去掉验证这个步骤考虑下结果：随便写了一个java文件，内容可以是123456，这种数据对于JVM完全不认识，所以这个验">
@@ -385,7 +385,7 @@
 <li>文件格式验证阶段有一个*，说的是所有验证阶段结束后看引用是否存在。符号引用验证就是验证阶段的最后，他会做所有引用的匹配，[引用 <-> 类, 引用 <-> 方法, 引用 <-> 字段]</-></-></-></li>
 <li>检查访问性，private, protected, public, default是否可以被访问</li>
 </ol>
-<font color="#FF2400"><br><br>总结四个步骤：<br><em> 文件格式验证：验证class文件是否是jvm可识别的文件  
+<font color="#FF2400"><br><br>总结四个步骤：<br><br><em> 文件格式验证：验证class文件是否是jvm可识别的文件  
 </em> 元数据验证：验证方法区层面的语法 （类，常量）<br><em> 字节码验证：验证方法体内部的语法 （类型转换） 
 </em> 符号引用验证：验证引用是否存在，访问性<br><br>四个阶段全部通过则该文件可以进行分配内存。<br></font>
 
