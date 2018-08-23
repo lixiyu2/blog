@@ -97,16 +97,16 @@
 <meta name="description" content="过程  加载 根据全限定名获取类的二进制字节流，从jar,war,ear等格式文件读取 字节流转为方法去的运行时数据结构 生成class对象，用此对象打开方法区的入口   验证 现在所有的class文件（这里指的是引用，还没有到实际的对象创建）都已经转为数据结构，存放在方法区 如果去掉验证这个步骤考虑下结果：随便写了一个java文件，内容可以是123456，这种数据对于JVM完全不认识，所以这个验">
 <meta name="keywords" content="后端,JVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM类加载过程">
+<meta property="og:title" content="JVM类加载机制-类加载过程">
 <meta property="og:url" content="http://yoursite.com/blog/2018/08/23/JVM类加载机制-类加载过程/index.html">
 <meta property="og:site_name" content="Smoke.Li">
 <meta property="og:description" content="过程  加载 根据全限定名获取类的二进制字节流，从jar,war,ear等格式文件读取 字节流转为方法去的运行时数据结构 生成class对象，用此对象打开方法区的入口   验证 现在所有的class文件（这里指的是引用，还没有到实际的对象创建）都已经转为数据结构，存放在方法区 如果去掉验证这个步骤考虑下结果：随便写了一个java文件，内容可以是123456，这种数据对于JVM完全不认识，所以这个验">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://pd2nmxi57.bkt.clouddn.com/class_load_20180823223916.png">
 <meta property="og:image" content="http://pd2nmxi57.bkt.clouddn.com/class_file_20180823224116.png">
-<meta property="og:updated_time" content="2018-08-23T15:38:19.727Z">
+<meta property="og:updated_time" content="2018-08-23T15:50:18.639Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JVM类加载过程">
+<meta name="twitter:title" content="JVM类加载机制-类加载过程">
 <meta name="twitter:description" content="过程  加载 根据全限定名获取类的二进制字节流，从jar,war,ear等格式文件读取 字节流转为方法去的运行时数据结构 生成class对象，用此对象打开方法区的入口   验证 现在所有的class文件（这里指的是引用，还没有到实际的对象创建）都已经转为数据结构，存放在方法区 如果去掉验证这个步骤考虑下结果：随便写了一个java文件，内容可以是123456，这种数据对于JVM完全不认识，所以这个验">
 <meta name="twitter:image" content="http://pd2nmxi57.bkt.clouddn.com/class_load_20180823223916.png">
 
@@ -143,7 +143,7 @@
 
 
 
-  <title>JVM类加载过程 | Smoke.Li</title>
+  <title>JVM类加载机制-类加载过程 | Smoke.Li</title>
   
 
 
@@ -293,7 +293,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">JVM类加载过程</h1>
+          <h1 class="post-title" itemprop="name headline">JVM类加载机制-类加载过程</h1>
         
 
         <div class="post-meta">
@@ -450,8 +450,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2018/08/23/JVM类加载机制-类加载器/" rel="prev" title="JVM类加载过程">
-                JVM类加载过程 <i class="fa fa-chevron-right"></i>
+              <a href="/blog/2018/08/23/JVM类加载机制-类加载器/" rel="prev" title="JVM类加载机制-类加载器">
+                JVM类加载机制-类加载器 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
