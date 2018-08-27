@@ -94,15 +94,21 @@
 
 
 
+<meta name="description" content="前HashMap作为kv形式非常常用及方便，所以秉着知其所以然的态度，了解一下内部流程。 数据结构HashMap的内部是数组+单链表，又叫哈希桶、哈希表、散列表。 看一眼结构图。  图转自： https://www.jianshu.com/p/7dcff1fd05ad 结构图分三块，一一进行拆分：  黄色区域：哈希桶中的数组 绿色区域：哈希桶中的单链表 黑红区域：哈希桶中的红黑树（JDK1.8之后">
 <meta name="keywords" content="后端,数据结构,源码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HashMap源码笔记及分析">
 <meta property="og:url" content="http://yoursite.com/blog/2018/08/05/HashMap源码笔记及分析/index.html">
 <meta property="og:site_name" content="Smoke.Li">
+<meta property="og:description" content="前HashMap作为kv形式非常常用及方便，所以秉着知其所以然的态度，了解一下内部流程。 数据结构HashMap的内部是数组+单链表，又叫哈希桶、哈希表、散列表。 看一眼结构图。  图转自： https://www.jianshu.com/p/7dcff1fd05ad 结构图分三块，一一进行拆分：  黄色区域：哈希桶中的数组 绿色区域：哈希桶中的单链表 黑红区域：哈希桶中的红黑树（JDK1.8之后">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-07T10:59:38.128Z">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/8/27/1657ac1b0fa65f27?w=369&h=424&f=png&s=82735">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/8/27/1657ac1b156e2323?w=740&h=305&f=png&s=33787">
+<meta property="og:updated_time" content="2018-08-27T09:56:19.488Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HashMap源码笔记及分析">
+<meta name="twitter:description" content="前HashMap作为kv形式非常常用及方便，所以秉着知其所以然的态度，了解一下内部流程。 数据结构HashMap的内部是数组+单链表，又叫哈希桶、哈希表、散列表。 看一眼结构图。  图转自： https://www.jianshu.com/p/7dcff1fd05ad 结构图分三块，一一进行拆分：  黄色区域：哈希桶中的数组 绿色区域：哈希桶中的单链表 黑红区域：哈希桶中的红黑树（JDK1.8之后">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/8/27/1657ac1b0fa65f27?w=369&h=424&f=png&s=82735">
 
 
 
@@ -347,7 +353,52 @@
       
 
       
-        
+        <h4 id="前"><a href="#前" class="headerlink" title="前"></a>前</h4><p>HashMap作为kv形式非常常用及方便，所以秉着知其所以然的态度，了解一下内部流程。</p>
+<h4 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h4><p>HashMap的内部是数组+单链表，又叫哈希桶、哈希表、散列表。</p>
+<p>看一眼结构图。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/8/27/1657ac1b0fa65f27?w=369&amp;h=424&amp;f=png&amp;s=82735" alt="cmd-markdown-logo"></p>
+<p>图转自： <a href="https://www.jianshu.com/p/7dcff1fd05ad" target="_blank" rel="noopener">https://www.jianshu.com/p/7dcff1fd05ad</a></p>
+<p>结构图分三块，一一进行拆分：</p>
+<ul>
+<li>黄色区域：哈希桶中的数组</li>
+<li>绿色区域：哈希桶中的单链表</li>
+<li>黑红区域：哈希桶中的红黑树（JDK1.8之后增加） //先不看这个</li>
+</ul>
+<h4 id="源码常量"><a href="#源码常量" class="headerlink" title="源码常量"></a>源码常量</h4><p>数据结构瞧一眼之后，记下，数组+单链表，后续咱们再把它带入到代码中。</p>
+<p>下面介绍一下一些定义：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/8/27/1657ac1b156e2323?w=740&amp;h=305&amp;f=png&amp;s=33787" alt="cmd-markdown-logo"></p>
+<p>一共有6个常量，目前只看这三个常量：</p>
+<ul>
+<li>初始长度： 理解为初始化的时候数组的length == 16</li>
+<li>最大长度： 桶不能无限大，不然服务炸了</li>
+<li>扩容比例：每次扩容75%后续</li>
+</ul>
+<h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h4><p>现在按照一个流程来解读hashMap源码， 流程不搞复杂，简简单单的：</p>
+<ol>
+<li>Map map = new HashMap();</li>
+<li>map.put(0, 1);</li>
+<li>map.put(null, 2);</li>
+</ol>
+<p>特意挑了两个特殊的key，用这三步来追踪代码。</p>
+<h5 id="Map-map-new-HashMap"><a href="#Map-map-new-HashMap" class="headerlink" title="Map map = new HashMap();"></a>Map map = new HashMap();</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Constructs an empty &lt;tt&gt;HashMap&lt;/tt&gt; with the default initial capacity</span><br><span class="line"> * (16) and the default load factor (0.75).</span><br><span class="line"> * </span><br><span class="line"> *  可以看出来，这个new Hash() 很简单（不像Spring 源码一样，new 个对象跳半天）</span><br><span class="line"> *  就是初始化了长度，初始化了扩容比例</span><br><span class="line"> */</span><br><span class="line">public HashMap() &#123;</span><br><span class="line">    this.loadFactor = DEFAULT_LOAD_FACTOR; // all other fields defaulted</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="map-put-0-1"><a href="#map-put-0-1" class="headerlink" title="map.put(0, 1);"></a>map.put(0, 1);</h5><p>对象已经初始化了，现在追踪put方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public V put(K key, V value) &#123;</span><br><span class="line">    return putVal(hash(key), key, value, false, true);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用了.putValue()方法，putValue()方法里hash(key), 追：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Computes key.hashCode() and spreads (XORs) higher bits of hash</span><br><span class="line"> * to lower.  Because the table uses power-of-two masking, sets of</span><br><span class="line"> * hashes that vary only in bits above the current mask will</span><br><span class="line"> * always collide. (Among known examples are sets of Float keys</span><br><span class="line"> * holding consecutive whole numbers in small tables.)  So we</span><br><span class="line"> * apply a transform that spreads the impact of higher bits</span><br><span class="line"> * downward. There is a tradeoff between speed, utility, and</span><br><span class="line"> * quality of bit-spreading. Because many common sets of hashes</span><br><span class="line"> * are already reasonably distributed (so dont benefit from</span><br><span class="line"> * spreading), and because we use trees to handle large sets of</span><br><span class="line"> * collisions in bins, we just XOR some shifted bits in the</span><br><span class="line"> * cheapest possible way to reduce systematic lossage, as well as</span><br><span class="line"> * to incorporate impact of the highest bits that would otherwise</span><br><span class="line"> * never be used in index calculations because of table bounds.</span><br><span class="line"> */</span><br><span class="line"> </span><br><span class="line">static final int hash(Object key) &#123;</span><br><span class="line">    int h;</span><br><span class="line">    return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>分析之前补充一下语法： </p>
+<blockquote>
+<p>^异或运算符: 规则为1^0 = 1 , 1^1 = 0 , 0^1 = 1 , 0^0 = 0， 相同为0 不同为1</p>
+</blockquote>
+<blockquote>
+<p>>&gt;&gt; 无符号右移运算符： 15 &gt;&gt;&gt; 2  15是00001111  &gt;&gt;&gt; 2 = 00000011; 15 &gt;&gt;&gt; 3 = 00000001</p>
+</blockquote>
+<p>继续， </p>
+<p>看hash这个方法， 如果key == null 则赋值0， 所以hashMap，key 可以为空；</p>
+<p>所以这个方法的意思是key 进行hash之后 再与 哈希之后的key右移16位， 在进行异或运算。</p>
+<p>不深究，这一步是让hash更均匀。</p>
+<p>继续，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Implements Map.put and related methods</span><br><span class="line"> *</span><br><span class="line"> * @param hash hash for key</span><br><span class="line"> * @param key the key</span><br><span class="line"> * @param value the value to put</span><br><span class="line"> * @param onlyIfAbsent if true, dont change existing value</span><br><span class="line"> * @param evict if false, the table is in creation mode.</span><br><span class="line"> * @return previous value, or null if none</span><br><span class="line"> */</span><br><span class="line">final V putVal(int hash, K key, V value, boolean onlyIfAbsent,</span><br><span class="line">               boolean evict) &#123;</span><br><span class="line">               </span><br><span class="line">    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; int n, i;</span><br><span class="line">    if ((tab = table) == null || (n = tab.length) == 0)</span><br><span class="line">        n = (tab = resize()).length;</span><br><span class="line">    if ((p = tab[i = (n - 1) &amp; hash]) == null)</span><br><span class="line">        tab[i] = newNode(hash, key, value, null);</span><br><span class="line">    else &#123;</span><br><span class="line">        Node&lt;K,V&gt; e; K k;</span><br><span class="line">        if (p.hash == hash &amp;&amp;</span><br><span class="line">            ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">            e = p;</span><br><span class="line">        else if (p instanceof TreeNode)</span><br><span class="line">            e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);</span><br><span class="line">        else &#123;</span><br><span class="line">            for (int binCount = 0; ; ++binCount) &#123;</span><br><span class="line">                if ((e = p.next) == null) &#123;</span><br><span class="line">                    p.next = newNode(hash, key, value, null);</span><br><span class="line">                    if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st</span><br><span class="line">                        treeifyBin(tab, hash);</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                if (e.hash == hash &amp;&amp;</span><br><span class="line">                    ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                    break;</span><br><span class="line">                p = e;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if (e != null) &#123; // existing mapping for key</span><br><span class="line">            V oldValue = e.value;</span><br><span class="line">            if (!onlyIfAbsent || oldValue == null)</span><br><span class="line">                e.value = value;</span><br><span class="line">            afterNodeAccess(e);</span><br><span class="line">            return oldValue;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ++modCount;</span><br><span class="line">    if (++size &gt; threshold)</span><br><span class="line">        resize();</span><br><span class="line">    afterNodeInsertion(evict);</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -445,8 +496,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/blog/images/20180804161924.png"
@@ -499,6 +559,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前"><span class="nav-number">1.</span> <span class="nav-text">前</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据结构"><span class="nav-number">2.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#源码常量"><span class="nav-number">3.</span> <span class="nav-text">源码常量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程"><span class="nav-number">4.</span> <span class="nav-text">流程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Map-map-new-HashMap"><span class="nav-number">4.1.</span> <span class="nav-text">Map map = new HashMap();</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#map-put-0-1"><span class="nav-number">4.2.</span> <span class="nav-text">map.put(0, 1);</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

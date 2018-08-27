@@ -1001,8 +1001,14 @@ git : git不限于搭建个人博客，github上和国内coding等都有很不�
       
         
           
-          
-          
+          前HashMap作为kv形式非常常用及方便，所以秉着知其所以然的态度，了解一下内部流程。
+数据结构HashMap的内部是数组+单链表，又叫哈希桶、哈希表、散列表。
+看一眼结构图。
+
+图转自： https://www.jianshu.com/p/7dcff1fd05ad
+结构图分三块，一一进行拆分：
+
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/blog/2018/08/05/HashMap源码笔记及分析/#more" rel="contents">
