@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="后端,架构,数据库," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="前言关于Druid的详情和问题请看： https://github.com/alibaba/druid/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98 版本123456789101112131415&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;com.alibaba&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;">
+<meta name="keywords" content="后端,架构,数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Boot集成Druid">
+<meta property="og:url" content="http://yoursite.com/blog/2018/10/26/Spring-Boot集成Druid/index.html">
+<meta property="og:site_name" content="Smoke.Li">
+<meta property="og:description" content="前言关于Druid的详情和问题请看： https://github.com/alibaba/druid/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98 版本123456789101112131415&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;com.alibaba&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://pd2nmxi57.bkt.clouddn.com/druid.png">
+<meta property="og:updated_time" content="2018-10-26T04:08:31.405Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Boot集成Druid">
+<meta name="twitter:description" content="前言关于Druid的详情和问题请看： https://github.com/alibaba/druid/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98 版本123456789101112131415&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;com.alibaba&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;">
+<meta name="twitter:image" content="http://pd2nmxi57.bkt.clouddn.com/druid.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/blog/2018/10/26/Spring-Boot集成Druid/"/>
+
+
+
+
+
+  <title>Spring Boot集成Druid | Smoke.Li</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2b880198ced78742032d44d5dc586de4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Smoke.Li</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/blog/2018/10/26/Spring-Boot集成Druid/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李锡钰">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/20180804161924.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Smoke.Li">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring Boot集成Druid</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-26T12:03:35+08:00">
+                2018-10-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>关于Druid的详情和问题请看：</p>
+<p><a href="https://github.com/alibaba/druid/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98" target="_blank" rel="noopener">https://github.com/alibaba/druid/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98</a></p>
+<h4 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;druid-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.1.9&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.3.2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;5.1.21&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h4><h5 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h5><p>该配置用的是多数据源。</p>
+<p>application.yml 直接添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  datasource:</span><br><span class="line">    db1: //数据源1</span><br><span class="line">      driver-class-name: com.mysql.jdbc.Driver</span><br><span class="line">      jdbc-Url: jdbc:mysql://xxx:3306/db1</span><br><span class="line">      username: ptmind</span><br><span class="line">      password: ptmind2012</span><br><span class="line">      type: com.alibaba.druid.pool.DruidDataSource</span><br><span class="line">    db2: //数据源2</span><br><span class="line">      driver-class-name: com.mysql.jdbc.Driver</span><br><span class="line">      jdbc-Url: jdbc:mysql://xxx:3306/db2</span><br><span class="line">      username: ptmind</span><br><span class="line">      password: ptmind2012</span><br><span class="line">      type: com.alibaba.druid.pool.DruidDataSource</span><br><span class="line">    druid: //通用配置</span><br><span class="line">      validation-query: SELECT 1 FROM DUAL</span><br><span class="line">      test-while-idle: false</span><br><span class="line">      pool-prepared-statements: true</span><br><span class="line">      max-pool-prepared-statement-per-connection-size: 20</span><br></pre></td></tr></table></figure>
+<h5 id="接管配置"><a href="#接管配置" class="headerlink" title="接管配置"></a>接管配置</h5><p>上面的配置由于是多数据源，需要将数据源接管注入</p>
+<p>db1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">package com.ptengine.ptconsole.config;</span><br><span class="line"></span><br><span class="line">import org.apache.ibatis.session.SqlSessionFactory;</span><br><span class="line">import org.mybatis.spring.SqlSessionFactoryBean;</span><br><span class="line">import org.mybatis.spring.SqlSessionTemplate;</span><br><span class="line">import org.mybatis.spring.annotation.MapperScan;</span><br><span class="line">import org.springframework.beans.factory.annotation.Qualifier;</span><br><span class="line">import org.springframework.boot.context.properties.ConfigurationProperties;</span><br><span class="line">import org.springframework.boot.jdbc.DataSourceBuilder;</span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.jdbc.datasource.DataSourceTransactionManager;</span><br><span class="line"></span><br><span class="line">import javax.sql.DataSource;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">// basePackages 的配置就是mybatis的Mapper层</span><br><span class="line">@MapperScan(basePackages = &#123;&quot;com.smoke.xxx.mapper.db1&quot;&#125;, sqlSessionTemplateRef = &quot;db1SqlSessionTemplate&quot;)</span><br><span class="line">public class Db1DataSourceConfig &#123;</span><br><span class="line">    </span><br><span class="line">    /**</span><br><span class="line">     * 这里的Bean形成后下面的Factory和Manager等自然传递</span><br><span class="line">     * ConfigurationProperties 就是读取yml的配置(db1的数据源)</span><br><span class="line">     */</span><br><span class="line">    @Bean(name = &quot;db1DataSource&quot;)</span><br><span class="line">    @ConfigurationProperties(prefix = &quot;spring.datasource.db1&quot;)</span><br><span class="line">    public DataSource testDataSource() &#123;</span><br><span class="line">        return DataSourceBuilder.create().build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean(name = &quot;db1SqlSessionFactory&quot;)</span><br><span class="line">    public SqlSessionFactory testSqlSessionFactory(@Qualifier(&quot;db1DataSource&quot;) DataSource dataSource) throws Exception &#123;</span><br><span class="line">        SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();</span><br><span class="line">        factoryBean.setDataSource(dataSource);</span><br><span class="line">//        factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(&quot;classpath:mapper/test/*.xml&quot;));</span><br><span class="line">        return factoryBean.getObject();</span><br><span class="line">    &#125;</span><br><span class="line">    @Bean(name=&quot;db1TransactionManager&quot;)</span><br><span class="line">    public DataSourceTransactionManager testTransactionManager(@Qualifier(&quot;db1DataSource&quot;) DataSource dataSource)&#123;</span><br><span class="line">        return  new DataSourceTransactionManager(dataSource);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean(name = &quot;db1SqlSessionTemplate&quot;)</span><br><span class="line">    public SqlSessionTemplate testSqlSessionTemplate(@Qualifier(&quot;db1SqlSessionFactory&quot;) SqlSessionFactory sqlSessionFactory) &#123;</span><br><span class="line">        return new SqlSessionTemplate(sqlSessionFactory);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>db2:</p>
+<p>同理将DB2以相同的方式配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@MapperScan(basePackages = &#123;&quot;com.smoke.xxx.mapper.db2&quot;&#125;, sqlSessionTemplateRef = &quot;db2SqlSessionTemplate&quot;)</span><br><span class="line">public class db2DataSourceConfig &#123;</span><br><span class="line">    </span><br><span class="line">    @Bean(name = &quot;db2DataSource&quot;)</span><br><span class="line">    @ConfigurationProperties(prefix = &quot;spring.datasource.db2&quot;)</span><br><span class="line">    public DataSource testDataSource() &#123;</span><br><span class="line">        return DataSourceBuilder.create().build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean(name = &quot;db2SqlSessionFactory&quot;)</span><br><span class="line">    public SqlSessionFactory testSqlSessionFactory(@Qualifier(&quot;db2DataSource&quot;) DataSource dataSource) throws Exception &#123;</span><br><span class="line">        SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();</span><br><span class="line">        factoryBean.setDataSource(dataSource);</span><br><span class="line">        return factoryBean.getObject();</span><br><span class="line">    &#125;</span><br><span class="line">    @Bean(name=&quot;db2TransactionManager&quot;)</span><br><span class="line">    public DataSourceTransactionManager testTransactionManager(@Qualifier(&quot;db2DataSource&quot;) DataSource dataSource)&#123;</span><br><span class="line">        return  new DataSourceTransactionManager(dataSource);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean(name = &quot;db2SqlSessionTemplate&quot;)</span><br><span class="line">    public SqlSessionTemplate testSqlSessionTemplate(@Qualifier(&quot;db2SqlSessionFactory&quot;) SqlSessionFactory sqlSessionFactory) &#123;</span><br><span class="line">        return new SqlSessionTemplate(sqlSessionFactory);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h5><p>上面的步骤可以直接使用多数据源的方式来进行操作，这里的步骤是开启druid的监控</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">package com.ptengine.ptconsole.config;</span><br><span class="line"></span><br><span class="line">import com.alibaba.druid.support.http.StatViewServlet;</span><br><span class="line">import com.alibaba.druid.support.http.WebStatFilter;</span><br><span class="line">import org.springframework.boot.web.servlet.FilterRegistrationBean;</span><br><span class="line">import org.springframework.boot.web.servlet.ServletRegistrationBean;</span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line">import java.util.Arrays;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public class DruidMonitorConfig &#123;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public ServletRegistrationBean servletRegistrationBean() &#123;</span><br><span class="line">        ServletRegistrationBean bean = new ServletRegistrationBean(new StatViewServlet(), &quot;/druid/*&quot;);</span><br><span class="line">        Map&lt;String,String&gt; initParams = new HashMap&lt;&gt;();</span><br><span class="line">        initParams.put(&quot;loginUsername&quot;,&quot;admin&quot;);</span><br><span class="line">        initParams.put(&quot;loginPassword&quot;,&quot;admin&quot;);</span><br><span class="line">        initParams.put(&quot;allow&quot;,&quot;&quot;);//默认就是允许所有访问</span><br><span class="line">        bean.setInitParameters(initParams);</span><br><span class="line">        return bean;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public FilterRegistrationBean webStatFilter()&#123;</span><br><span class="line">        FilterRegistrationBean bean = new FilterRegistrationBean();</span><br><span class="line">        bean.setFilter(new WebStatFilter());</span><br><span class="line">        Map&lt;String,String&gt; initParams = new HashMap&lt;&gt;();</span><br><span class="line">        initParams.put(&quot;exclusions&quot;,&quot;*.js,*.css,/druid/*&quot;);</span><br><span class="line">        bean.setInitParameters(initParams);</span><br><span class="line">        bean.setUrlPatterns(Arrays.asList(&quot;/*&quot;));</span><br><span class="line">        return  bean;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里配置好后直接访问</p>
+<p><a href="http://localhost:8080/druid/" target="_blank" rel="noopener">http://localhost:8080/druid/</a></p>
+<p>结果：</p>
+<p><img src="http://pd2nmxi57.bkt.clouddn.com/druid.png" alt="cmd-markdown-logo"></p>
+<p>以上多数据源的配置及监控配置完毕。</p>
+<h4 id="结"><a href="#结" class="headerlink" title="结"></a>结</h4><p>Spring Boot的特点就是这种Config的形式来接管或注入或配置一些功能，Boot的思想就是无配置，包括xml，所以以这种config的方式来替代传统MVC的大量xml方式。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/后端/" rel="tag"># 后端</a>
+          
+            <a href="/blog/tags/架构/" rel="tag"># 架构</a>
+          
+            <a href="/blog/tags/数据库/" rel="tag"># 数据库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/09/18/久病成良医/" rel="next" title="久病成良医">
+                <i class="fa fa-chevron-left"></i> 久病成良医
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/20180804161924.png"
+               alt="李锡钰" />
+          <p class="site-author-name" itemprop="name">李锡钰</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/blog/archives/">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#版本"><span class="nav-number">2.</span> <span class="nav-text">版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#正文"><span class="nav-number">3.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#配置"><span class="nav-number">3.1.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#接管配置"><span class="nav-number">3.2.</span> <span class="nav-text">接管配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#监控"><span class="nav-number">3.3.</span> <span class="nav-text">监控</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结"><span class="nav-number">4.</span> <span class="nav-text">结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李锡钰</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
