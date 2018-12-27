@@ -103,7 +103,7 @@
 <meta property="og:description" content="错误:123456789Caused by: java.sql.SQLException: Incorrect string value: &amp;apos;\xF6\x9D\x98\x84&amp;apos; for column &amp;apos;column&amp;apos; at row 1    at com.mysql.jdbc.SQLError.createSQLException(SQLError.java">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/27/167ef1a99a0e95bf?w=341&h=221&f=png&s=7614">
-<meta property="og:updated_time" content="2018-12-27T10:15:40.175Z">
+<meta property="og:updated_time" content="2018-12-27T10:20:39.807Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql 5.7 emoji问题">
 <meta name="twitter:description" content="错误:123456789Caused by: java.sql.SQLException: Incorrect string value: &amp;apos;\xF6\x9D\x98\x84&amp;apos; for column &amp;apos;column&amp;apos; at row 1    at com.mysql.jdbc.SQLError.createSQLException(SQLError.java">
@@ -357,7 +357,8 @@
 <p>mysql 编码为 utf-8造成， utf-8只能存储1-3个字节，而emoji表情是4个字节</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#查看当前mysql的编码</span><br><span class="line">show variables like &apos;character%&apos;;</span><br></pre></td></tr></table></figure>
-<h4 id="解决"><a href="#解决" class="headerlink" title="解决:"></a>解决:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[client]</span><br><span class="line">default-character-set=utf8mb4</span><br><span class="line">  </span><br><span class="line">[mysql]</span><br><span class="line">default-character-set=utf8mb4</span><br><span class="line">  </span><br><span class="line">[mysqld]</span><br><span class="line">character-set-server = utf8mb4</span><br><span class="line">collation-server = utf8mb4_unicode_ci</span><br></pre></td></tr></table></figure>
+<h4 id="解决"><a href="#解决" class="headerlink" title="解决:"></a>解决:</h4><p>utf8mb4是utf8的新版，兼容utf8</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[client]</span><br><span class="line">default-character-set=utf8mb4</span><br><span class="line">  </span><br><span class="line">[mysql]</span><br><span class="line">default-character-set=utf8mb4</span><br><span class="line">  </span><br><span class="line">[mysqld]</span><br><span class="line">character-set-server = utf8mb4</span><br><span class="line">collation-server = utf8mb4_unicode_ci</span><br></pre></td></tr></table></figure>
 <font color="red">修改后重启mysql服务</font>
 
 <p>这是修改后的正确 mysql 配置</p>
